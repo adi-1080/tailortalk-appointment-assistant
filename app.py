@@ -5,8 +5,7 @@ import requests
 import os
 
 
-A = os.getenv("BACKEND_API")
-API_URL = f"{A}/chat"
+API_URL = "https://tailortalk-appointment-assistant.onrender.com/chat"
 
 st.set_page_config(page_title="TailorTalk", page_icon="🧵")
 st.title("🧵 TailorTalk - Appointment Assistant")

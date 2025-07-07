@@ -1,0 +1,4 @@
+.env
+venv
+credentials
+backend/__pycache__

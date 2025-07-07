@@ -1,0 +1,17 @@
+# Backend
+fastapi
+uvicorn
+requests
+python-dotenv
+
+# Google Calendar API
+google-api-python-client
+google-auth
+
+# LangChain + Gemini
+langchain
+langchain-google-genai
+google-generativeai
+
+# Frontend
+streamlit

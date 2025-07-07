@@ -1,21 +1,37 @@
-from google.oauth2 import service_account
-from googleapiclient.discovery import build
+import os
+import json
 import datetime
 
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
+
 SCOPES = ['https://www.googleapis.com/auth/calendar']
-SERVICE_ACCOUNT_FILE = 'credentials/service_account.json'
 CALENDAR_ID = "adityagupta5277@gmail.com"
 
-credentials = service_account.Credentials.from_service_account_file(
-    SERVICE_ACCOUNT_FILE,
+# Load credentials JSON from environment variable
+creds_json = os.getenv("GOOGLE_CREDENTIALS_JSON")
+if not creds_json:
+    raise ValueError("Missing GOOGLE_CREDENTIALS_JSON environment variable")
+
+# Parse JSON and create credentials
+creds_dict = json.loads(creds_json)
+credentials = service_account.Credentials.from_service_account_info(
+    creds_dict,
     scopes=SCOPES
 )
 
+# Build the Google Calendar API service
 service = build('calendar', 'v3', credentials=credentials)
 
 def get_events():
     now = datetime.datetime.utcnow().isoformat() + 'Z'
-    events_result = service.events().list(calendarId=CALENDAR_ID, timeMin=now, maxResults=10, singleEvents=True, orderBy='startTime').execute()
+    events_result = service.events().list(
+        calendarId=CALENDAR_ID,
+        timeMin=now,
+        maxResults=10,
+        singleEvents=True,
+        orderBy='startTime'
+    ).execute()
     return events_result.get('items', [])
 
 def book_event(summary, start_time, end_time):

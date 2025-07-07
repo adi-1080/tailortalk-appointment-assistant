@@ -5,7 +5,7 @@ import requests
 import os
 
 
-A = os.get_env("BACKEND_API")
+A = os.getenv("BACKEND_API")
 API_URL = f"{A}/chat"
 
 st.set_page_config(page_title="TailorTalk", page_icon="🧵")

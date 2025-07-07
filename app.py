@@ -2,8 +2,11 @@
 
 import streamlit as st
 import requests
+import os
 
-API_URL = "http://127.0.0.1:8000/chat"  # Update this if deployed
+
+A = os.get_env("BACKEND_API")
+API_URL = f"{A}/chat"
 
 st.set_page_config(page_title="TailorTalk", page_icon="🧵")
 st.title("🧵 TailorTalk - Appointment Assistant")

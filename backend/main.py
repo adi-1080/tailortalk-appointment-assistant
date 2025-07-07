@@ -4,6 +4,8 @@ from backend.calendar_utils import get_events, book_event
 from datetime import datetime, timedelta
 from backend.langchain_agent import run_agent
 import asyncio
+from apscheduler.schedulers.background import BackgroundScheduler
+import requests
 
 app = FastAPI()
 
@@ -59,3 +61,17 @@ async def chat(request: Request):
         import traceback
         traceback.print_exc()
         return {"error": f"Internal server error: {str(e)}"}
+
+# Scheduler to ping the server every 10 minutes
+
+def ping_self():
+    try:
+        url = "https://tailortalk-appointment-assistant.onrender.com/"  # Change to your deployed URL if needed
+        print(f"Pinging {url} to keep server awake...")
+        requests.get(url)
+    except Exception as e:
+        print(f"Ping failed: {e}")
+
+scheduler = BackgroundScheduler()
+scheduler.add_job(ping_self, 'interval', minutes=10)
+scheduler.start()

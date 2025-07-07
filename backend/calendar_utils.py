@@ -8,8 +8,11 @@ from googleapiclient.discovery import build
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 CALENDAR_ID = "adityagupta5277@gmail.com"
 
-# Load credentials from credentials/service_account.json
-creds_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'credentials', 'service_account.json')
+# Try to get path from environment variable, else fallback to local path
+creds_path = os.getenv(
+    "GOOGLE_APPLICATION_CREDENTIALS",
+    os.path.join(os.path.dirname(os.path.dirname(__file__)), 'credentials', 'service_account.json')
+)
 if not os.path.exists(creds_path):
     raise ValueError(f"Google credentials file not found at {creds_path}")
 

@@ -3,6 +3,7 @@ fastapi
 uvicorn
 requests
 python-dotenv
+dateparser
 
 # Google Calendar API
 google-api-python-client
